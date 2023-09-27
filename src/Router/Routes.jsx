@@ -12,7 +12,6 @@ const routes = createBrowserRouter([
     {
         path: '/',
         element: <MainLayout></MainLayout>,
-        errorElement: <ErrorPage></ErrorPage>,
         children: [
             {
                 path: '/',
@@ -32,7 +31,8 @@ const routes = createBrowserRouter([
                 element: <PhoneDetails></PhoneDetails>,
                 loader: ()=> fetch('/public/phones.json')
             }
-        ]
+        ],
+        errorElement: <ErrorPage></ErrorPage>,
     }
 ])
 export default routes;
