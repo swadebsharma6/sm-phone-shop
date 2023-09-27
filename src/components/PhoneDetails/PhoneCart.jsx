@@ -1,10 +1,46 @@
 import PropTypes from 'prop-types';
+import swal from 'sweetalert';
 
 
 const PhoneCart = ({phone}) => {
-    console.log(phone);
+    
 
-    const { image, phone_name,brand_name, price,} = phone ;
+    const {id, image, phone_name,brand_name, price,} = phone ;
+    
+
+    const handleAddToLS =() =>{
+
+      const addedFavoritePhones = [];
+      
+
+      const favoriteItems = JSON.parse(localStorage.getItem('favorites'));
+
+      if(!favoriteItems){
+        addedFavoritePhones.push(phone);
+        localStorage.setItem('favorites',JSON.stringify(addedFavoritePhones));
+        swal("Good job!", "Your Product added!", "success");
+      }
+
+      else{
+
+        const isExist = favoriteItems.find(phn => phn.id === id);
+        
+        if(!isExist){
+          addedFavoritePhones.push(...favoriteItems, phone);
+        localStorage.setItem('favorites',JSON.stringify(addedFavoritePhones));
+        swal("Good job!", "You clicked the button!", "success");
+        }
+        else{
+          swal("Sorry!", "You Already Added Product!", "error");
+        }
+
+        
+      }
+
+
+    }
+
+
 
     return (
         <div className='h-[70vh] flex justify-center items-center'>
@@ -30,7 +66,7 @@ const PhoneCart = ({phone}) => {
             selling licenses. Yet its own business model disruption is only part of
             the story
           </p>
-         <div>
+         <div onClick={handleAddToLS}>
             <button className='btn btn-secondary'>Add Favorite</button>
          </div>
         </div>
